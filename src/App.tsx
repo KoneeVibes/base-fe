@@ -1,25 +1,29 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { SignIn } from './page/authentication';
+import { Dashboard } from './page/dashboard';
+import { Settings } from './page/settings';
+import { MakePost } from './page/post/create';
+import { RouteProtector } from './config/routeProtector';
+import { EditPost } from './page/post/edit';
+import { PostHistory } from './page/post/history';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route element={<RouteProtector />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route path="/makepost" element={<MakePost />} />
+          <Route path="/editpost" element={<EditPost />} />
+          <Route path="/posthistory" element={<PostHistory />} />
+
+          <Route path="/settings" element={<Settings />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

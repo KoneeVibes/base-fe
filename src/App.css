@@ -1,38 +1,108 @@
-.App {
-  text-align: center;
+@media screen and (min-width: 0px) {
+
+    html,
+    body,
+    #root {
+        box-sizing: border-box;
+        margin: 0;
+        min-height: 100vh;
+        background-color: var(--app-background-color);
+
+        --app-background-color: #FAFAFB;
+        --primary-color: #605BFF;
+        --light-color: #FFFFFF;
+        --dark-color: #000000;
+        --dark-h1-color: #2A2E34;
+        --dark-body1-color: #656F7D;
+        --dark-input-color: #808080;
+        --dark-label-color: #4F5762;
+        --diluted-primary-color: #F2F4FD;
+        --border-color: #E5E7EF;
+        --box-shadow-color: rgba(0, 0, 0, 0.1);
+        --side-nav-item-color: #030229;
+        --active-primary-button: #F03D44;
+
+        --basic-padding: 2rem;
+        --basic-margin: 2rem;
+        --flex-gap: 2rem;
+        --top-nav-height: 2.875rem;
+        --side-nav-width: 100%;
+    }
+
+    * {
+        /* outline: 1px red solid; */
+    }
+
+    .loader {
+        width: calc(0.75 * var(--basic-padding)) !important;
+        height: auto !important;
+    }
+
+    /* below are styles pertaining to the side-navigation bar */
+    .app-icon {
+        flex: 1;
+        min-width: 0 !important;
+        width: -webkit-fill-available;
+    }
+
+    .institution-logo {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .mobile-side-navigation-header {
+        justify-content: space-between !important;
+    }
+
+    .side-navigation-header {
+        padding: calc(var(--basic-padding)) calc(var(--basic-padding)) !important;
+    }
+
+    .Side-Nav-Item:hover {
+        background-color: var(--diluted-primary-color) !important;
+    }
+
+    .Side-Nav-Item:hover .MuiListItemText-root>span {
+        color: var(--primary-color);
+    }
+
+    .Side-Nav-Item:hover .MuiListItemIcon-root>svg path {
+        fill: var(--primary-color);
+    }
+
+    .Side-Nav-Item .MuiListItemText-root>span {
+        color: var(--side-nav-item-color);
+        font-family: Nunito;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: normal;
+        white-space: normal;
+    }
+
+    .Side-Nav-Actions-Area .menu-box {
+        padding: calc(var(--basic-padding)/2) var(--basic-padding) calc(var(--basic-padding));
+    }
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@media screen and (min-width: 200px) {
+    .app-icon {
+        flex: unset;
+        min-width: 0 !important;
+        width: auto;
+    }
+
+    .side-navigation-header .app-icon {
+        display: block;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+@media screen and (min-width: 425px) {
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    html,
+    body,
+    #root {
+        --side-nav-width: 13.625rem;
+    }
 }

@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { SignIn } from './page/authentication';
 import { Dashboard } from './page/dashboard';
 import { Settings } from './page/settings';
-import { MakePost } from './page/post/create';
+import { MakeBlogPost } from './page/post/blog/create';
 import { RouteProtector } from './config/routeProtector';
-import { EditPost } from './page/post/edit';
-import { PostHistory } from './page/post/history';
+import { EditBlogPost } from './page/post/blog/edit';
+import { BlogPostHistory } from './page/post/blog/history';
+import { GalleryPostHistory } from './page/post/gallery/history';
 
 function App() {
   return (
@@ -16,9 +17,13 @@ function App() {
         <Route element={<RouteProtector />}>
           <Route path="/dashboard" element={<Dashboard />} />
 
-          <Route path="/makepost" element={<MakePost />} />
-          <Route path="/editpost" element={<EditPost />} />
-          <Route path="/posthistory" element={<PostHistory />} />
+          {/* blog routes */}
+          <Route path="/post/blog" element={<MakeBlogPost />} />
+          <Route path="/post/blog/:id" element={<EditBlogPost />} />
+          <Route path="/history/blog" element={<BlogPostHistory />} />
+
+          {/* gallery routes */}
+          <Route path="/history/gallery" element={<GalleryPostHistory />} />
 
           <Route path="/settings" element={<Settings />} />
         </Route>

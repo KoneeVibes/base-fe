@@ -1,6 +1,6 @@
 import { Stack, styled } from "@mui/material";
 
-export const EditPostWrapper = styled(Stack)(({ theme }) => {
+export const MakeBlogPostWrapper = styled(Stack)(({ theme }) => {
     return {
         gap: "var(--flex-gap)",
     }

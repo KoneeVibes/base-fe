@@ -19,14 +19,15 @@ export const TopNavigationWrapper = styled(AppBar)(({ theme }) => {
         "& .top-navigation-RHS": {
             overflow: "hidden",
         },
-        "& .top-navigation-RHS-item": {
+        "& .menu-button-box": {
+            display: "flex",
+            justifyContent: "center",
             border: "2px solid var(--dark-color)",
             borderRadius: "5px",
             padding: "calc(var(--basic-padding)/4)",
         },
-        "& .menu-button-box": {
-            display: "flex",
-            justifyContent: "center"
+        "& .ancilliary-element-box": {
+            display: "none"
         },
         [theme.breakpoints.up(200)]: {
             "& .top-navigation-LHS": {
@@ -46,6 +47,9 @@ export const TopNavigationWrapper = styled(AppBar)(({ theme }) => {
             backgroundColor: "inherit",
             "& .menu-button-box": {
                 display: "none"
+            },
+            "& .ancilliary-element-box": {
+                display: "block"
             },
         },
     }

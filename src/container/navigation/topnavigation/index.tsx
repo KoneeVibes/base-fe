@@ -41,7 +41,12 @@ export const TopNavigation: React.FC<TopNavigationPropsType> = ({ pageTitle, anc
                     direction={"row"}
                     gap={"calc(var(--flex-gap)/4)"}
                 >
-                    {ancillaryElement}
+                    <Box
+                        component={"div"}
+                        className="top-navigation-RHS-item ancilliary-element-box"
+                    >
+                        {ancillaryElement}
+                    </Box>
                     <Box
                         component={"div"}
                         className="top-navigation-RHS-item menu-button-box"

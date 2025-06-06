@@ -8,11 +8,20 @@ import logo from "../../../asset/icon/logo.svg";
 import { SideNavigationPropsType } from "../../../type/container.type";
 import { SideNavigationLogoutIcon } from "../../../asset";
 import { Menu } from "../../menu";
+import { signOutUser } from "../../../util/api/authentication/signout";
+import Cookies from "universal-cookie";
 
 export const SideNavigation: React.FC<SideNavigationPropsType> = ({ username, role, headshot }) => {
+    const noSubNavItems = ["Dashboard"];
+
+    const cookies = new Cookies();
+    const TOKEN = cookies.getAll().TOKEN;
+
     const navigate = useNavigate();
     const matchesMobileAndAbove = useMediaQuery('(min-width:425px)');
-    const { setIsSideNavigationClosing, isMobileSideNavigationOpen, setIsMobileSideNavigationOpen } = useContext(AppContext);
+    const {
+        activeNavItem, setActiveNavItem, setIsSideNavigationClosing, isMobileSideNavigationOpen, setIsMobileSideNavigationOpen
+    } = useContext(AppContext);
 
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -25,26 +34,54 @@ export const SideNavigation: React.FC<SideNavigationPropsType> = ({ username, ro
         setIsSideNavigationClosing(false);
     };
 
-    const handleNavItemClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, item: string) => {
+    const handleSideNavItemClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, item: string) => {
+        e.preventDefault();
         e.stopPropagation();
-        navigate(`${item}`);
-        return setIsMobileSideNavigationOpen(false);
+        if (noSubNavItems.includes(item)) {
+            navigate(`/${item.toLowerCase()}`);
+            return setIsMobileSideNavigationOpen(false);
+        };
+        // reset active nav item to default and toggle close dropdown
+        if (item === activeNavItem) {
+            return setActiveNavItem(undefined);
+        };
+        return setActiveNavItem(item);
     };
 
     const handleUserProfileIconAreaClick = () => {
         return setIsMenuOpen(!isMenuOpen);
     };
 
-    const handleUserProfileMenuItemClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, url: string) => {
+    const handleLogOutUser = async (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        try {
+            const response = await signOutUser(TOKEN);
+            if (response.status === "success") {
+                cookies.remove("TOKEN", { path: '/' });
+                navigate("/", { replace: true });
+            } else {
+                console.error('Logout failed. Try again');
+            }
+        } catch (error: any) {
+            console.error('Logout failed, Contact Admin:', error);
+        }
+    }
+
+    const handleUserProfileMenuItemClick = async (e: React.MouseEvent<HTMLLIElement, MouseEvent>, url: string) => {
         e.preventDefault();
         switch (url) {
             case "/logout":
-                // logout user here
-                navigate("/")
+                await handleLogOutUser(e);
                 break;
             default:
                 break;
-        }
+        };
+    };
+
+    const handleSideNavMenuItemClick = (e: React.MouseEvent<HTMLLIElement, MouseEvent>, url: string) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigate(url);
+        return setIsMobileSideNavigationOpen(false);
     };
 
     const drawer = (
@@ -61,7 +98,7 @@ export const SideNavigation: React.FC<SideNavigationPropsType> = ({ username, ro
                         marginTop: "0",
                         cursor: "pointer",
                     }}
-                    onClick={(e) => handleNavItemClick(e, sideNavItem.url)}
+                    onClick={(e) => handleSideNavItemClick(e, sideNavItem.name)}
                 >
                     <ListItemButton
                         sx={{
@@ -79,6 +116,13 @@ export const SideNavigation: React.FC<SideNavigationPropsType> = ({ username, ro
                             primary={sideNavItem.name}
                         />
                     </ListItemButton>
+                    {(!noSubNavItems.includes(sideNavItem.name)) && (
+                        <Menu
+                            open={activeNavItem === sideNavItem.name}
+                            menuitems={sideNavItem.subItems}
+                            handleMenuItemClick={handleSideNavMenuItemClick}
+                        />
+                    )}
                 </ListItem>
             )
         })

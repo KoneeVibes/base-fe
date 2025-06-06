@@ -21,6 +21,10 @@
         --box-shadow-color: rgba(0, 0, 0, 0.1);
         --side-nav-item-color: #030229;
         --active-primary-button: #F03D44;
+        --ash-subtitle-color: #667085;
+        --gallery-view-color: #F2F7FF;
+        --gallery-edit-color: #E2FFE8;
+        --gallery-delete-color: #FFF0F0;
 
         --basic-padding: 2rem;
         --basic-margin: 2rem;
@@ -83,6 +87,26 @@
 
     .Side-Nav-Actions-Area .menu-box {
         padding: calc(var(--basic-padding)/2) var(--basic-padding) calc(var(--basic-padding));
+    }
+
+    .Side-Nav-Item .menu-box {
+        padding: 0 var(--basic-padding) calc(var(--basic-padding)/2);
+    }
+
+    .Side-Nav-Item .menu-box>ul {
+        padding-inline-start: 56px;
+    }
+
+    .Side-Nav-Item .menu-box>ul li {
+        font-size: 14px;
+    }
+
+    /* below are styles pertaining to modals */
+
+    .gallery-upload-form-modal form {
+        border-radius: 8px;
+        max-width: 56rem;
+        width: -webkit-fill-available;
     }
 }
 

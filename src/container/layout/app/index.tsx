@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { DashboardLayoutPropsType } from "../../../type/container.type";
 import { MainArea } from "../../mainarea";
 import { SideNavigation } from "../../navigation/sidenavigation";
@@ -6,8 +6,10 @@ import { TopNavigation } from "../../navigation/topnavigation";
 import { AppLayoutWrapper } from "./styled";
 import { Avatar } from "@mui/material";
 import uploadImageIcon from "../../../asset/image/sample-profile-photo.svg";
+import { AppContext } from "../../../context/appContext";
 
 export const AppLayout: React.FC<DashboardLayoutPropsType> = ({ pageId, pageTitle, ancillaryElement, children }) => {
+    const { authenticatedUser } = useContext(AppContext);
 
     useEffect(() => {
         if (!pageId) return;
@@ -26,8 +28,8 @@ export const AppLayout: React.FC<DashboardLayoutPropsType> = ({ pageId, pageTitl
                 ancillaryElement={ancillaryElement}
             />
             <SideNavigation
-                username={"Easin Arafat"}
-                role={"Free Account"}
+                username={authenticatedUser.firstName || "User"}
+                role={authenticatedUser?.type}
                 headshot={
                     <Avatar
                         variant="rounded"

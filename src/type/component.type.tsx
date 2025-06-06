@@ -26,6 +26,37 @@ export type MenuItemType = {
 
 export type MenuPropsType<T> = {
     open: boolean,
-    menuitems: T,
+    menuitems?: T,
     handleMenuItemClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, item: string) => void
+};
+
+export type BaseTablePropsType = {
+    headers: string[]
+    children: React.ReactNode
+};
+
+export type BaseAlertModalPropsType = {
+    open: boolean,
+    icon: React.ReactNode,
+    handleClose: ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void) | undefined,
+    handleCallToAction?: () => void,
+    title?: string,
+    message?: string,
+    callToAction?: string,
+};
+
+export type FormModalPropsType = {
+    open: boolean,
+    handleClickOutside: ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void) | undefined,
+    handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
+    title?: string,
+    children: React.ReactNode,
+    className?: string,
+};
+
+export type BaseImageModalPropsType = {
+    open: boolean,
+    src: string,
+    altText: string,
+    handleClose: ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void) | undefined,
 };

@@ -6,3 +6,7 @@ export { ReactComponent as SideNavigationDashboardIcon } from "./icon/side-nav-d
 export { ReactComponent as SideNavigationPostIcon } from "./icon/side-nav-post-icon.svg";
 export { ReactComponent as SideNavigationSettingsIcon } from "./icon/side-nav-settings-icon.svg";
 export { ReactComponent as SideNavigationLogoutIcon } from "./icon/side-nav-logout-icon.svg";
+export { ReactComponent as GalleryUploadCameraIcon } from "./icon/gallery-upload-camera-icon.svg";
+export { ReactComponent as GalleryViewIcon } from "./icon/gallery-eye-icon.svg";
+export { ReactComponent as GalleryEditIcon } from "./icon/gallery-edit-icon.svg";
+export { ReactComponent as GalleryDeleteIcon } from "./icon/gallery-delete-icon.svg";

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Box, CircularProgress, Typography } from "@mui/material";
 import { AuthLayout } from "../../container/layout/auth";
 import { SignInWrapper } from "./styled";
@@ -11,10 +11,14 @@ import { MailIcon, PasswordIcon } from "../../asset";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import { signInUserService } from "../../util/api/authentication/signIn";
+import { AppContext } from "../../context/appContext";
+import { retrieveLoggedInUserService } from "../../util/api/user/retrieveloggedinuser";
 
 export const SignIn = () => {
     const cookies = new Cookies();
     const navigate = useNavigate();
+
+    const { setAuthenticatedUser } = useContext(AppContext);
 
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -38,17 +42,18 @@ export const SignIn = () => {
         try {
             const response = await signInUserService(formDetails);
             if (response.status === "success") {
+                const loggedInUser = await retrieveLoggedInUserService(response.token);
                 setIsLoading(false);
+                setAuthenticatedUser(loggedInUser);
                 cookies.set("TOKEN", response.token, {
                     path: "/",
                 });
-                navigate("/dashboard");
+                navigate("/history/gallery");
             } else {
                 setIsLoading(false);
                 setError('Authentication failed. Please check your credentials and try again.');
             }
         } catch (error: any) {
-            navigate("/dashboard");
             setIsLoading(false);
             setError(`Login failed. ${error.message}`);
             console.error('Login failed:', error);

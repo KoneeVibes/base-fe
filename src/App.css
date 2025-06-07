@@ -25,6 +25,9 @@
         --gallery-view-color: #F2F7FF;
         --gallery-edit-color: #E2FFE8;
         --gallery-delete-color: #FFF0F0;
+        --progress-bar-label-color: #232A35;
+        --image-upload-cta-color: #6C757D;
+        --caution-button-color: #B81F00;
 
         --basic-padding: 2rem;
         --basic-margin: 2rem;
@@ -52,7 +55,6 @@
     .institution-logo {
         width: 100%;
         height: auto;
-        border-radius: 50%;
         object-fit: cover;
     }
 
@@ -102,10 +104,11 @@
     }
 
     /* below are styles pertaining to modals */
-
-    .gallery-upload-form-modal form {
+    .gallery-upload-form-modal form,
+    .gallery-upload-successful-modal .MuiDialog-paper,
+    .gallery-delete-confirmation-modal .MuiDialog-paper {
         border-radius: 8px;
-        max-width: 56rem;
+        max-width: 28rem;
         width: -webkit-fill-available;
     }
 }

@@ -6,9 +6,8 @@ export const updateGalleryService = async (token: string, projectId: string, gal
             method: 'PATCH',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: payload
         });
         const res = await response.json();
         if (!response.ok) {

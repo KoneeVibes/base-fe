@@ -1,4 +1,4 @@
-import { FormLabelProps, InputBaseProps } from "@mui/material";
+import { FormLabelProps, InputBaseProps, LinearProgressProps } from "@mui/material";
 
 export type BaseTypographyType = {
     fontsize?: string,
@@ -39,10 +39,11 @@ export type BaseAlertModalPropsType = {
     open: boolean,
     icon: React.ReactNode,
     handleClose: ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void) | undefined,
-    handleCallToAction?: () => void,
+    handleCallToAction?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
     title?: string,
     message?: string,
     callToAction?: string,
+    className?: string
 };
 
 export type FormModalPropsType = {
@@ -60,3 +61,11 @@ export type BaseImageModalPropsType = {
     altText: string,
     handleClose: ((event: {}, reason: "backdropClick" | "escapeKeyDown") => void) | undefined,
 };
+
+export type ProgressBarPropsType = {
+    value: number
+} & LinearProgressProps
+
+export type DeleteModalPropsType = Omit<BaseAlertModalPropsType, "icon" | "message" | "callToAction"> & {
+    isLoading: boolean
+}

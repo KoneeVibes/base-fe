@@ -2,20 +2,30 @@ import { Box, Card, CardContent, CardMedia, Stack, Typography } from "@mui/mater
 import { AppLayout } from "../../../../container/layout/app";
 import { GalleryPostHistoryWrapper } from "./styled";
 import { BaseButton } from "../../../../component/button/styled";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../../../context/appContext";
 import { GalleryUploadForm } from "../../../../container/form/galleryuploadform";
 import Cookies from "universal-cookie";
 import { retrieveAllGalleryService } from "../../../../util/api/gallery/retrieveallgallery";
 import { useQuery } from "@tanstack/react-query";
 import { formatDate } from "../../../../helper/dateFormatter";
-import { GalleryDeleteIcon, GalleryEditIcon, GalleryViewIcon } from "../../../../asset";
+import { GalleryDeleteIcon, GalleryEditIcon, GalleryViewIcon, SuccessTickIcon } from "../../../../asset";
+import { BaseAlertModal } from "../../../../component/modal/alert";
+import { BaseImageModal } from "../../../../component/modal/image";
+import { BaseDeleteModal } from "../../../../component/modal/delete";
+import { deleteGalleryService } from "../../../../util/api/gallery/deletegallery";
 
 export const GalleryPostHistory = () => {
     const cookies = new Cookies();
     const TOKEN = cookies.getAll().TOKEN;
 
-    const { setIsGalleryUploadFormModalOpen } = useContext(AppContext);
+    const { isGalleryUploadFormModalOpen, setIsGalleryUploadFormModalOpen } = useContext(AppContext);
+
+    const [isLoading, setIsLoading] = useState(false);
+    const [isImageModalOpen, setIsImageModalOpen] = useState(false);
+    const [activeGalleryItem, setActiveGalleryItem] = useState({} as Record<string, any>);
+    const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] = useState(false);
+    const [isGalleryUploadSuccessfulAlertModalOpen, setIsGalleryUploadSuccessfulAlertModalOpen] = useState(false);
 
     const { data: gallery, refetch: refetchGallery } = useQuery({
         queryKey: ['gallery', TOKEN],
@@ -26,28 +36,72 @@ export const GalleryPostHistory = () => {
         enabled: !!TOKEN,
     });
 
+    useEffect(() => {
+        if (isGalleryUploadSuccessfulAlertModalOpen) {
+            refetchGallery();
+        };
+    }, [isGalleryUploadSuccessfulAlertModalOpen, refetchGallery]);
+
     const handleOpenGalleryUploadFormModal = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
         return setIsGalleryUploadFormModalOpen(true);
     };
 
-    const handleActionClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: string, item: Record<string, any>) => {
+    const handleActionClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, action: string, item: Record<string, any>) => {
         e.preventDefault();
         e.stopPropagation();
+        await setActiveGalleryItem(item);
         switch (action) {
             case "view":
-
+                setIsImageModalOpen(true);
                 break;
             case "edit":
-
+                setIsGalleryUploadFormModalOpen(true);
                 break;
             case "delete":
-
+                setIsDeleteConfirmationModalOpen(true);
                 break;
             default:
                 break;
         }
+    };
+
+    const handleGalleryUploadSuccessfulAlertModalClickOutside = () => {
+        return setIsGalleryUploadSuccessfulAlertModalOpen(true);
+    };
+
+    const handleGalleryUploadSuccessfulAlertModalCallToActionClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        return setIsGalleryUploadSuccessfulAlertModalOpen(false);
+    };
+
+    const handleImageModalClose = () => {
+        setIsImageModalOpen(false);
+        return setActiveGalleryItem({});
+    };
+
+    const handleDeleteConfirmationModalClose = () => {
+        return setIsDeleteConfirmationModalOpen(false);
     }
+
+    const handleDeleteGallery = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            const response = await deleteGalleryService(TOKEN, "334e375f-bcdf-4664-ad61-a61a31e590ac", activeGalleryItem.id);
+            if (response.status === "success") {
+                setIsLoading(false);
+                setActiveGalleryItem({});
+                setIsDeleteConfirmationModalOpen(false);
+                return refetchGallery();
+            } else {
+                setIsLoading(false);
+            }
+        } catch (error: any) {
+            setIsLoading(false);
+            console.error('Upload to gallery failed:', error);
+        }
+    };
 
     return (
         <AppLayout
@@ -103,7 +157,32 @@ export const GalleryPostHistory = () => {
                     </BaseButton>
                 </Box>
                 <GalleryUploadForm
-                    alertModalController={setIsGalleryUploadFormModalOpen}
+                    gallery={isGalleryUploadFormModalOpen ? activeGalleryItem : {}}
+                    setGallery={setActiveGalleryItem}
+                    alertModalController={setIsGalleryUploadSuccessfulAlertModalOpen}
+                />
+                <BaseImageModal
+                    open={isImageModalOpen}
+                    handleClose={handleImageModalClose}
+                    src={activeGalleryItem.url}
+                    altText={activeGalleryItem.description}
+                />
+                <BaseAlertModal
+                    icon={<SuccessTickIcon />}
+                    callToAction="Close"
+                    className="gallery-upload-successful-modal"
+                    message="Upload Successful"
+                    open={isGalleryUploadSuccessfulAlertModalOpen}
+                    handleClose={handleGalleryUploadSuccessfulAlertModalClickOutside}
+                    handleCallToAction={handleGalleryUploadSuccessfulAlertModalCallToActionClick}
+                />
+                <BaseDeleteModal
+                    className="gallery-delete-confirmation-modal"
+                    title="Are you sure you want to delete item?"
+                    open={isDeleteConfirmationModalOpen}
+                    isLoading={isLoading}
+                    handleClose={handleDeleteConfirmationModalClose}
+                    handleCallToAction={handleDeleteGallery}
                 />
                 <Stack
                     gap={"var(--flex-gap)"}

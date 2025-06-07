@@ -10,12 +10,14 @@ export const BaseAlertModal: React.FC<BaseAlertModalPropsType> = ({
     title,
     message,
     handleCallToAction,
-    callToAction
+    callToAction,
+    className
 }) => {
     return (
         <BaseAlertModalWrapper
             open={open}
             onClose={handleClose}
+            className={className}
         >
             <DialogContent
                 className="modal-content"
@@ -28,11 +30,11 @@ export const BaseAlertModal: React.FC<BaseAlertModalPropsType> = ({
                 </Box>
                 <DialogContentText
                     variant="h2"
-                    fontFamily={"Poppins"}
-                    fontWeight={700}
+                    fontFamily={"Nunito"}
+                    fontWeight={600}
                     fontSize={24}
                     lineHeight={"normal"}
-                    color={"var(--midnight-blue-color)"}
+                    color={"var(--dark-color)"}
                     marginBlock={"calc(var(--basic-margin)/2)"}
                     whiteSpace={"normal"}
                     textAlign={"center"}
@@ -60,7 +62,6 @@ export const BaseAlertModal: React.FC<BaseAlertModalPropsType> = ({
                 <BaseButton
                     variant="contained"
                     onClick={handleCallToAction}
-                    padding={"calc(var(--basic-padding)/4) calc(var(--basic-padding) * 1.5)"}
                 >
                     <Typography
                         variant={"button"}

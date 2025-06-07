@@ -2,7 +2,7 @@ import { BASE_ENDPOINT } from "../../endpoint";
 
 export const deleteGalleryService = async (token: string, projectId: string, galleryId: string) => {
     try {
-        const response = await fetch(`${BASE_ENDPOINT}/user//user/gallery/${projectId}/${galleryId}`, {
+        const response = await fetch(`${BASE_ENDPOINT}/user/gallery/${projectId}/${galleryId}`, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,

@@ -10,3 +10,7 @@ export { ReactComponent as GalleryUploadCameraIcon } from "./icon/gallery-upload
 export { ReactComponent as GalleryViewIcon } from "./icon/gallery-eye-icon.svg";
 export { ReactComponent as GalleryEditIcon } from "./icon/gallery-edit-icon.svg";
 export { ReactComponent as GalleryDeleteIcon } from "./icon/gallery-delete-icon.svg";
+export { ReactComponent as SuccessTickIcon } from "./icon/success-modal-tick.svg";
+export { ReactComponent as MediaIcon } from "./icon/gallery-upload-media-icon.svg";
+export { ReactComponent as UploadTickIcon } from "./icon/gallery-upload-tick-icon.svg";
+export { ReactComponent as CautionIcon } from "./icon/cautionicon.svg";

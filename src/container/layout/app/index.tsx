@@ -7,9 +7,17 @@ import { AppLayoutWrapper } from "./styled";
 import { Avatar } from "@mui/material";
 import uploadImageIcon from "../../../asset/image/sample-profile-photo.svg";
 import { AppContext } from "../../../context/appContext";
+import { retrieveLoggedInUserService } from "../../../util/api/user/retrieveloggedinuser";
+import Cookies from "universal-cookie";
 
 export const AppLayout: React.FC<DashboardLayoutPropsType> = ({ pageId, pageTitle, ancillaryElement, children }) => {
-    const { authenticatedUser } = useContext(AppContext);
+    const cookies = new Cookies();
+    const TOKEN = cookies.getAll().TOKEN;
+
+    const {
+        authenticatedUser,
+        setAuthenticatedUser 
+    } = useContext(AppContext);
 
     useEffect(() => {
         if (!pageId) return;
@@ -18,6 +26,19 @@ export const AppLayout: React.FC<DashboardLayoutPropsType> = ({ pageId, pageTitl
             document.body.removeAttribute("id");
         };
     }, [pageId]);
+
+    useEffect(() => {
+        if (!TOKEN) return;
+        const fetchLoggedInUser = async () => {
+            try {
+                const response = await retrieveLoggedInUserService(TOKEN);
+                return setAuthenticatedUser(response);
+            } catch (error) {
+                console.error('Failed to fetch authenticated user:', error);
+            }
+        };
+        fetchLoggedInUser();
+    }, [TOKEN, setAuthenticatedUser]);
 
     return (
         <AppLayoutWrapper

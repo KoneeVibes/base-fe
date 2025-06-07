@@ -35,9 +35,3 @@ export type BlogHistoryTablePropsType = {
     handleEllipsisButtonClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => void
     handleActionItemClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, action: string) => void
 } & BaseTablePropsType;
-
-export type GalleryHistoryTablePropsType = {
-    selectedGalleryPostId: string | null,
-    handleEllipsisButtonClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) => void
-    handleActionItemClick: (e: React.MouseEvent<HTMLLIElement, MouseEvent>, action: string) => void
-} & BaseTablePropsType;

@@ -231,7 +231,6 @@ export const GalleryPostHistory = () => {
                                         <Stack
                                             direction={"row"}
                                             gap={"calc(var(--flex-gap)/2)"}
-                                            alignItems={"center"}
                                             justifyContent={"space-between"}
                                             overflow={"hidden"}
                                         >
@@ -243,8 +242,9 @@ export const GalleryPostHistory = () => {
                                                     type="button"
                                                     disableElevation
                                                     variant="contained"
-                                                    sx={{ width: "-webkit-fill-available" }}
+                                                    sx={{ width: "-webkit-fill-available", height: "100%" }}
                                                     bgcolor="var(--gallery-view-color)"
+                                                    padding="calc(var(--basic-padding)/2) calc(var(--basic-padding)/2)"
                                                     onClick={(e) => handleActionClick(e, "view", item)}
                                                 >
                                                     <GalleryViewIcon />
@@ -258,8 +258,9 @@ export const GalleryPostHistory = () => {
                                                     type="button"
                                                     disableElevation
                                                     variant="contained"
-                                                    sx={{ width: "-webkit-fill-available" }}
+                                                    sx={{ width: "-webkit-fill-available", height: "100%" }}
                                                     bgcolor="var(--gallery-edit-color)"
+                                                    padding="calc(var(--basic-padding)/2) calc(var(--basic-padding)/2)"
                                                     onClick={(e) => handleActionClick(e, "edit", item)}
                                                 >
                                                     <GalleryEditIcon />
@@ -273,8 +274,9 @@ export const GalleryPostHistory = () => {
                                                     type="button"
                                                     disableElevation
                                                     variant="contained"
-                                                    sx={{ width: "-webkit-fill-available" }}
+                                                    sx={{ width: "-webkit-fill-available", height: "100%" }}
                                                     bgcolor="var(--gallery-delete-color)"
+                                                    padding="calc(var(--basic-padding)/2) calc(var(--basic-padding)/2)"
                                                     onClick={(e) => handleActionClick(e, "delete", item)}
                                                 >
                                                     <GalleryDeleteIcon />

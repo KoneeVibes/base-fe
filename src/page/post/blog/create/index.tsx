@@ -8,7 +8,7 @@ export const MakeBlogPost = () => {
             pageTitle={"Make a Blog Post"}
         >
             <MakeBlogPostWrapper>
-
+                <p>Hello</p>
             </MakeBlogPostWrapper>
         </AppLayout>
     )

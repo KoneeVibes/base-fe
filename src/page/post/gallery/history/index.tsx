@@ -81,7 +81,8 @@ export const GalleryPostHistory = () => {
     };
 
     const handleDeleteConfirmationModalClose = () => {
-        return setIsDeleteConfirmationModalOpen(false);
+        setIsDeleteConfirmationModalOpen(false);
+        return setActiveGalleryItem({});
     }
 
     const handleDeleteGallery = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -91,8 +92,7 @@ export const GalleryPostHistory = () => {
             const response = await deleteGalleryService(TOKEN, "334e375f-bcdf-4664-ad61-a61a31e590ac", activeGalleryItem.id);
             if (response.status === "success") {
                 setIsLoading(false);
-                setActiveGalleryItem({});
-                setIsDeleteConfirmationModalOpen(false);
+                await handleDeleteConfirmationModalClose();
                 return refetchGallery();
             } else {
                 setIsLoading(false);
